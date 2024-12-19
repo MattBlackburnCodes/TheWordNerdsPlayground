@@ -1,19 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Flatlist, Button } from 'react-native';
+import { View, Text, StyleSheet, Flatlist, Button, ImageBackground } from 'react-native';
 import QuoteScreen from '@/components/QuoteScreen';
 import { NavigationContainer, NavigationIndependentTree } from '@react-navigation/native';
+import backgroundImage from '@/assets/images/serene.png';
+
 
 export default function HomeScreen() {
     return (
-        <View style={styles.container}>
+        <ImageBackground 
+            source={backgroundImage}
+            style={styles.container}
+        >
             <View style={styles.titleGroup}>
-                <Text style={styles.text}>Welcome to</Text>
-                <Text style={styles.title}>The Word Nerd's </Text>
-                <Text style={styles.title}>Playground</Text>
-                <Text style={styles.text}>Let's get started!</Text>
+                <Text style={styles.title}>Wisdom Drop</Text>
+                <Text style={styles.slogan}>Short bursts of knowledge at the touch of your fingers</Text>
             </View>
             <QuoteScreen/>
-        </View>
+        </ImageBackground>
     )
 }
 
@@ -24,19 +27,25 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         display: 'flex',
         gap: 10,
-        backgroundColor: 'lightblue',
+        backgroundColor: 'black',
         padding: 100,
     },
     text: {
         fontSize: 18,
-        color: 'white',
+        color: 'lightblue',
         textAlign: 'center',
     },
     title: {
-        fontSize: 24,
-        color: 'white',
-        fontFamily: '',
+        fontSize: 48,
+        color: 'lightblue',
+        fontStyle: 'italic',
         textAlign: 'center',
+    },
+    slogan: {
+        fontSize: 18,
+        textAlign: 'center',
+        fontStyle: 'italic',
+        color: 'lightblue',
     },
     titleGroup: {
         display: 'flex',

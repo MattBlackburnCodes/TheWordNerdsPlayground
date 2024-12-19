@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, Button, StyleSheet, ActivityIndicator } from "react-native";
+import { TouchableOpacity } from "react-native";
 
 export default function QuotesScreen() {
   const [quote, setQuote] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  const apiURL = "https://zenquotes.io/api/quotes";
 
   useEffect(() => {
     fetchQuote(); // Fetch a quote when the screen loads
@@ -11,7 +14,7 @@ export default function QuotesScreen() {
 
   const fetchQuote = () => {
     setLoading(true);
-    fetch("https://zenquotes.io/api/quotes")
+    fetch(apiURL)
       .then((response) => response.json())
       .then((data) => {
         const randomIndex = Math.floor(Math.random() * data.length);
@@ -32,7 +35,9 @@ export default function QuotesScreen() {
     return (
       <View style={styles.container}>
         <Text style={styles.loadingText}>Failed to load quote.</Text>
-        <Button title="Try Again" onPress={fetchQuote} />
+        <TouchableOpacity style={styles.button} onPress={fetchQuote}>
+            <Text style={styles.buttonText}>Get New Quote </Text>
+        </TouchableOpacity> 
       </View>
     );
   }
@@ -40,31 +45,64 @@ export default function QuotesScreen() {
   //Displays the quote, author, and a button to fetch a new quote from the api
   return (
     <View style={styles.container}>
-      <Text style={styles.quoteText}>{quote.q}</Text>
-      <Text style={styles.authorText}>- {quote.a}</Text>
-      <Button title="Get New Quote" onPress={fetchQuote} />
+        <View style={styles.quotes}>
+            <Text style={styles.quoteText}>{quote.q}</Text>
+            <Text style={styles.authorText}>- {quote.a}</Text>
+        </View>
+        <TouchableOpacity style={styles.button} onPress={fetchQuote}>
+            <Text style={styles.buttonText}>Get New Quote </Text>
+        </TouchableOpacity> 
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 10,
-  },
-  loadingText: {
-    fontSize: 18,
-  },
-  quoteText: {
-    fontSize: 24,
-    fontStyle: "italic",
-    marginBottom: 10,
-    textAlign: "center",
-  },
-  authorText: {
-    fontSize: 18,
-    marginBottom: 20,
-  },
+    container: {
+        flex: 1,
+        justifyContent: "flex-start",
+        alignItems: "center",
+        padding: 30,
+        width: "150%",
+        height: "150%",
+            
+    },
+    quotes: {
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        opacity: .8,
+        backgroundColor: "purple",
+        borderRadius: 10,   
+    },
+    button: {
+        backgroundColor: 'purple',
+        padding: 10,
+        borderRadius: 5,
+        margin: 10,
+    },
+    buttonText: {
+        color: 'lightblue',
+        fontSize: 18,
+    },
+    loadingText: {
+        fontSize: 18,
+    },
+    quoteText: {
+        fontSize: 24,
+        fontStyle: "italic",
+        marginBottom: 10,
+        textAlign: "center",
+        color: "lightblue",
+        justifyContent: "center",
+        alignItems: "center",
+        display: "flex",
+        padding: 10,
+        opacity: 1,
+    },
+    authorText: {
+        fontSize: 18,
+        marginBottom: 20,
+        color: "yellow",
+        fontStyle: "italic",
+    },
 });
